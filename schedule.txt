@@ -1,0 +1,16 @@
+batch name, addmission, hall name, hall capacity,start dd mm yy,end dd mm yy
+
+
+
+
+
+int result =datecmp(startBatch.startDate,startBatch.endDate);
+    if(result == 0) { printf("Both date is same please change date\n");} 
+    else if (result > 0) {
+        printf("%d-%d-%d is later than %d-%d-%d",
+                     startBatch.startDate.dd,startBatch.startDate.mm,startBatch.startDate.yy,
+                     startBatch.endDate.dd,startBatch.endDate.mm,startBatch.endDate.yy);
+    }
+    else printf(" %d-%d-%d earlier than%d-%d-%d",
+                     startBatch.startDate.dd,startBatch.startDate.mm,startBatch.startDate.yy,
+                     startBatch.endDate.dd,startBatch.endDate.mm,startBatch.endDate.yy);
