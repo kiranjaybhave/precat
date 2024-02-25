@@ -1,7 +1,7 @@
 #include"header.h"
 Batch b[10];
 StartBatch prev_startBatch[4];
-int count=4;
+int count=2;
 void add_Batch() {
     Batch batch;
 
@@ -90,30 +90,51 @@ void print_Batch() {
     }
  }
 
- 
+int compare(char a[],char b[])  
+{  
+    int flag=0,i=0;  // integer variables declaration  
+    while(a[i]!='\0' &&b[i]!='\0')  // while loop  
+    {  
+       if(a[i]!=b[i])  
+       {  
+           flag=1;  
+           break;  
+       }  
+       i++;  
+    }  
+    if(flag==0)  
+    return 0;  
+    else  
+    return 1;  
+} 
+
+
 int isEmptyHall(char hallName[]) {
     
-    for (int i = 0; i < count; i++)
-    {
-        printf("venue %s  | %s\n",hallName,prev_startBatch[i].venue.lec_hall_name);
-        char name[15];
-        strcpy(name,prev_startBatch[i].venue.lec_hall_name); 
-        printf("strcmp :: %d\n",strcmp(hallName,name)==0);
-        if (strcmp(hallName,name)==0)
-        {
-            return 0;
-        }
+    // for (int i = 0; i < count; i++)
+    // {
+    //     printf("venue %s  | %s\n",hallName,prev_startBatch[i].venue.lec_hall_name);
+    //     char name[15];
+    //     strcpy(name,prev_startBatch[i].venue.lec_hall_name); 
+    //     printf("strcmp :: %d\n",strcmp(hallName,name)==0);
+    //     if (strcmp(hallName,name)==0)
+    //     {
+    //         return 0;
+    //     }
         
-    }
+    // }
     return 1;
 }
 void new_Batch_Schedule() {
     read_Batch_data();
     read_venue_Data();
     read_Batch_Schedule();
-    
+    count++;
     StartBatch startBatch;
     int isPresent=0;
+
+    char lec_hall_name[10];
+
     printf("Enter A Batch Name To Schedule Batch\n");
     scanf("%s",&startBatch.newBatch.batch_name);
 
@@ -149,22 +170,51 @@ void new_Batch_Schedule() {
             break;
     }
     }
-    if(isPresent==0) {
-        printf("Batch Not Present First Add Batch\n");
-        return;
+    int hallCount=0;
+    Hall :
+    printf("Venue List For Lecture and Capacity\n");
+    for (int i = 0; i < 5; i++) {
+        if (v1[i].lec_hall_capacity >=startBatch.newBatch.admission) {
+            printf("%s   |   %d\n", v1[i].lec_hall_name,v1[i].lec_hall_capacity);
+        } 
+        
     }
-    for (int i = 0; i < 5; i++)
-    {
-        // printf("****for Exact Cap1****\n");
-       if(v1[i].lec_hall_capacity>=startBatch.newBatch.admission) {
-        strcpy(startBatch.venue.lec_hall_name,v1[i].lec_hall_name);
-        startBatch.venue.lec_hall_capacity=v1[i].lec_hall_capacity;
-        // printf("%d  %s\n",startBatch.venue.lec_hall_capacity,startBatch.venue.lec_hall_name);
-            break;
-       }
-    }
-    printf("%d  %s\n",startBatch.venue.lec_hall_capacity,startBatch.venue.lec_hall_name);
+    hallCount++;
+    printf("Choose any one\n");
+    scanf("%s",lec_hall_name);
     
+    for (int i = 0; i < count-1; i++)
+    {
+        printf("%s   |  %s\n",lec_hall_name, prev_startBatch[i].venue.lec_hall_name);
+        int result3 = compare(lec_hall_name,prev_startBatch[i].venue.lec_hall_name);
+        printf("result3 :%d\n",result3);
+        if(result3 == 0) {
+            printf("%s Hall is Busy\n",lec_hall_name);
+            if(hallCount<2)
+                goto Hall;
+            if(hallCount >= 2) {
+                printf("All Hall is Busy\n");
+                return;
+            }    
+                
+        } else {
+            printf("You can conduct lecture in Hall %s\n",lec_hall_name);
+            strcpy(startBatch.venue.lec_hall_name,lec_hall_name);
+            printf("%s\n",startBatch.venue.lec_hall_name);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            int result = compare(v1[i].lec_hall_name,startBatch.venue.lec_hall_name);
+        if (v1[i].lec_hall_capacity >=startBatch.newBatch.admission && !result) {
+            // printf("%s   |   %d\n", v1[i].lec_hall_name,v1[i].lec_hall_capacity);
+            startBatch.venue.lec_hall_capacity=v1[i].lec_hall_capacity;
+            // printf("%d\n",startBatch.venue.lec_hall_capacity);
+        }
+     }
+
+    }
+
+    Date :
     printf("Enter Batch Start Date\n");
     scanf("%d%d%d",&startBatch.startDate.dd,&startBatch.startDate.mm,&startBatch.startDate.yy);
     
@@ -174,17 +224,20 @@ void new_Batch_Schedule() {
     int result =datecmp(startBatch.startDate,startBatch.endDate);
     if(result == 0 || result >0) {
         printf("Please Enter Correct Date\n");
-        return;
-    } else
-    {
+        goto Date;
+    } else {
         printf("Date valid\n");
     }
     
+    
+
+
     //printf("%d-%d-%d\n",startBatch.startDate.dd,startBatch.startDate.mm,startBatch.startDate.yy);
     // printf("%s %d\n",startBatch.venue.lec_hall_name,startBatch.venue.lec_hall_capacity);
     // printf("%s  %d",startBatch.newBatch.batch_name,startBatch.newBatch.admission);
    
-    fprintf(fp, "%s, %d, %s, %d, %d, %d, %d, %d, %d, %d\n", 
+   
+    fprintf(fp, "%s,%d,%s,%d,%d,%d,%d,%d,%d,%d\n", 
     startBatch.newBatch.batch_name,startBatch.newBatch.admission,
     startBatch.venue.lec_hall_name,startBatch.venue.lec_hall_capacity,
     startBatch.startDate.dd,startBatch.startDate.mm,startBatch.startDate.yy,

@@ -14,3 +14,28 @@ int result =datecmp(startBatch.startDate,startBatch.endDate);
     else printf(" %d-%d-%d earlier than%d-%d-%d",
                      startBatch.startDate.dd,startBatch.startDate.mm,startBatch.startDate.yy,
                      startBatch.endDate.dd,startBatch.endDate.mm,startBatch.endDate.yy);
+
+
+
+                     if(isPresent==0) {
+        printf("Batch Not Present First Add Batch\n");
+        return;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        // printf("****for Exact Cap1****\n");
+       if(v1[i].lec_hall_capacity>=startBatch.newBatch.admission) {
+        strcpy(startBatch.venue.lec_hall_name,v1[i].lec_hall_name);
+        startBatch.venue.lec_hall_capacity=v1[i].lec_hall_capacity;
+        // printf("%d  %s\n",startBatch.venue.lec_hall_capacity,startBatch.venue.lec_hall_name);
+            break;
+       }
+    }
+
+
+
+
+
+
+
+    
