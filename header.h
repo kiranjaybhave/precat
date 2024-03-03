@@ -10,11 +10,16 @@ typedef struct Date
     int mm;
     int yy;
 }Date;
-
+typedef struct Time{
+    int batch_Start_Time;
+    int batch_End_Time;
+}Time; 
 typedef struct Module{
     char module_name[10];
     char Faculaty_name[10];
     int duration;
+    Date startDate;
+    Date endDate;
 } Module;
 
 typedef struct Batch{
@@ -47,6 +52,7 @@ typedef struct StartBatch{
     Module module[3];
     Date startDate;
     Date endDate;
+    Time batchTime;
 } StartBatch;
 
 typedef struct CheckIsEmpty
@@ -71,6 +77,10 @@ void new_Batch_Schedule();
 int datecmp(Date d1,Date d2);
 bool isLeapYear(int year);
 bool isValidDate(Date d);
+
+
+void checkDate();
+void checkTime();
 
 void read_Batch_Schedule();
 void print_Batch_Schedule(); 
