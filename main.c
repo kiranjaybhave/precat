@@ -7,7 +7,7 @@ int menu() {
     printf("1. Add New Batch\n");
     printf("2. See All Batches\n");
     printf("3. Set date for New Batch\n");
-    printf("4. read_Batch_Schedule\n");
+    printf("4. Final Scheduling\n");
     scanf("%d",&choice);
     return choice;
 }
@@ -52,7 +52,7 @@ int main() {
                 break;
             case 4:
                 // printf("\ninside case 4\n");
-                read_Batch_Schedule();
+                finalSchedule();
                 break;
             case 5:
                 count = get_id();
