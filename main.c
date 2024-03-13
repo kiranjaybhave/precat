@@ -26,7 +26,7 @@ int main() {
     // read_Batch_data();
     // printf("==========================\n");
 
-    
+    int count;
     int choice;
     printf("Choice Batch\n");
     do
@@ -54,6 +54,10 @@ int main() {
                 // printf("\ninside case 4\n");
                 read_Batch_Schedule();
                 break;
+            case 5:
+                count = get_id();
+                printf("count : %d\n",count); 
+                break;   
             default:
                 printf("Something Wrong\n");
                 break;

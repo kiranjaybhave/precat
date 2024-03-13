@@ -1,7 +1,7 @@
 #include"header.h"
 Batch b[10];
 StartBatch prev_startBatch[10];
-int count=7;
+int count=2;
 StartBatch startBatch;
 void add_Batch() {
     Batch batch;
@@ -110,11 +110,13 @@ int compare(char a[],char b[])
 } 
 
 
-
 void new_Batch_Schedule() {
     read_Batch_data();
     read_venue_Data();
     read_Batch_Schedule();
+    read_moduleData();
+    read_faculty_Data();
+    
     count++;
     // StartBatch startBatch;
     int isPresent=0;
@@ -148,7 +150,14 @@ void new_Batch_Schedule() {
     printf("%s\n",startBatch.newBatch.batch_name);
     strcpy(batch_name,startBatch.newBatch.batch_name);
     printf("batch_name :: %s\n",batch_name);
-
+    for (int i = 0; i < count; i++) {
+        if (strstr(batch_name,prev_startBatch[i].newBatch.batch_name)) {
+             printf("Batch is already scheduled\n");
+             return;
+        }
+    }
+    
+    
      FILE* fp = fopen("scheduleBatch.csv", "a+");
     if (!fp) {
 		printf("Can't open file\n");
@@ -331,7 +340,7 @@ Date :
                         goto Hall;
                     }
                     if((prev_startBatch[i].batchTime.batch_Start_Time != startBatch.batchTime.batch_Start_Time)&&(prev_startBatch[i].batchTime.batch_End_Time != startBatch.batchTime.batch_End_Time)) {
-                        printf("difere dte n tm2\n");
+                        // printf("difere dte n tm2\n");
                         goto Final;
                     }
                     if(strstr(lec_hall_name,prev_startBatch[i].venue.lec_hall_name) &&
@@ -339,7 +348,7 @@ Date :
                    prev_startBatch[i].endDate.yy <= startBatch.startDate.yy &&
                    prev_startBatch[i].batchTime.batch_Start_Time != startBatch.batchTime.batch_Start_Time&&
                    prev_startBatch[i].batchTime.batch_End_Time != startBatch.batchTime.batch_End_Time) {
-                            printf("difere dte n tm3\n");
+                            // printf("difere dte n tm3\n");
                             goto Final;
                    }
                 }
@@ -358,21 +367,169 @@ Date :
                 }
             }
 
+    // char module_name[10];
+    int choice;
+    int k = 0;
+    SUBJECT :
+    printf("Chooce a Subject \n");
+    while (k < 4) {
+        printf("1. C_Prog \n");
+        printf("2. CPP \n");
+        printf("3. DS \n");
+        printf("4. Apti\n");
+        scanf("%d",&choice);
+        
+        if(choice == 1) {
+        // int i;    
+        for (int i = 0; i < 7; i++) {
+        C :
+        if(1 == f1[i].C_prog) {
+            printf("%s\t%d\t%s\n", f1[i].faculaty_name, f1[i].C_prog, "C_prog");
+            for(int j=0; j<count; j++) {
+            if(strstr(f1[i].faculaty_name,prev_startBatch[j].faculaty[0].faculaty_name) && ((prev_startBatch[j].batchTime.batch_Start_Time + 2 )!= startBatch.batchTime.batch_Start_Time)) {
+                int c;
+                printf("You want to Assign faculaty '%s' for C_prog enter 1 for yes or 0 for No\n",f1[i].faculaty_name);
+                scanf("%d",&c);
+                if(c==1) { 
+                strcpy(startBatch.faculaty[0].faculaty_name,f1[i].faculaty_name);
+                strcpy(startBatch.module[0].module_name,"C_prog");
+                printf("startBatch.faculaty[0].faculaty_name :: %s & %s\n",startBatch.faculaty[0].faculaty_name,startBatch.module[0].module_name);
+                  k++;
+                  goto SUBJECT;
+                  }
+                  else {
+                    i++;
+                    if(i>=7) {
+                        printf("Faculty for C_Prog is over\n");
+                        return;
+                    }
+                    goto C;
+                  }
+                }
+            }
+        }
+      }
+    }
 
+        if(choice == 2) {
+        // int i;    
+        for (int i = 0; i < 7; i++) {
+        CPP :
+        if(1 == f1[i].CPP) {
+            printf("%s\t%d\t%s\n", f1[i].faculaty_name, f1[i].CPP, "CPP");
+            for(int j=0; j<count; j++) {
+            if(strstr(f1[i].faculaty_name,prev_startBatch[j].faculaty[1].faculaty_name) && ((prev_startBatch[j].batchTime.batch_Start_Time + 2 )!= startBatch.batchTime.batch_Start_Time)) {
+                int c;
+                printf("You want to Assign faculaty '%s' for CPP enter 1 for yes or 0 for No\n",f1[i].faculaty_name);
+                scanf("%d",&c);
+                if(c==1) { 
+                strcpy(startBatch.faculaty[1].faculaty_name,f1[i].faculaty_name);
+                strcpy(startBatch.module[1].module_name,"CPP");
+                printf("startBatch.faculaty[1].faculaty_name :: %s & %s\n",startBatch.faculaty[1].faculaty_name,startBatch.module[1].module_name);
+                  k++;
+                  goto SUBJECT;
+                  }
+                  else {
+                    i++;
+                    if(i>=7) {
+                        printf("Faculty for CPP is over\n");
+                        return;
+                    }
+                    goto CPP;
+                  }
+                }
+            }
+        }
+      }
+    }
+        
+        if(choice == 3) {
+        // int i;    
+        for (int i = 0; i < 7; i++) {
+        DS :
+        if(1 == f1[i].Ds) {
+            printf("%s\t%d\t%s\n", f1[i].faculaty_name, f1[i].C_prog, "DS");
+            for(int j=0; j<count; j++) {
+            if(strstr(f1[i].faculaty_name,prev_startBatch[j].faculaty[2].faculaty_name) && ((prev_startBatch[j].batchTime.batch_Start_Time + 2 )!= startBatch.batchTime.batch_Start_Time)) {
+                int c;
+                printf("You want to Assign faculaty '%s' for DS enter 1 for yes or 0 for No\n",f1[i].faculaty_name);
+                scanf("%d",&c);
+                if(c==1) { 
+                strcpy(startBatch.faculaty[2].faculaty_name,f1[i].faculaty_name);
+                strcpy(startBatch.module[2].module_name,"DS");
+                printf("startBatch.faculaty[2].faculaty_name :: %s & %s\n",startBatch.faculaty[2].faculaty_name,startBatch.module[2].module_name);
+                k++;
+                goto SUBJECT;
+                }
+                  else {
+                    i++;
+                    if(i>=7) {
+                        printf("Faculty for DS is over\n");
+                        return;
+                    }
+                    goto DS;
+                  }
+                }
+            }
+        }
+      }
+    }
+        
+        if(choice == 4) {
+        // int i;    
+        for (int i = 0; i < 7; i++) {
+        APTI :
+        if(1 == f1[i].Apti) {
+            printf("%s\t%d\t%s\n", f1[i].faculaty_name, f1[i].Apti, "APTI");
+            for(int j=0; j<count; j++) {
+            if(strstr(f1[i].faculaty_name,prev_startBatch[j].faculaty[3].faculaty_name) && ((prev_startBatch[j].batchTime.batch_Start_Time + 2 )!= startBatch.batchTime.batch_Start_Time)) {
+                int c;
+                printf("You want to Assign faculaty '%s' for Apti enter 1 for yes or 0 for No",f1[i].faculaty_name);
+                scanf("%d",&c);
+                if(c==1) { 
+                    // printf("test1\n");
+                strcpy(startBatch.faculaty[3].faculaty_name,f1[i].faculaty_name);
+                // printf("test1\n");
+                strcpy(startBatch.module[3].module_name,"APTI");
+                printf("startBatch.faculaty[3].faculaty_name :: %s & %s\n",startBatch.faculaty[3].faculaty_name, startBatch.module[3].module_name);
+                  k++;
+                  goto SUBJECT;
+                  }
+                  else {
+                    i++;
+                    if(i>=7) {
+                        printf("Faculty for APTI is over\n");
+                        return;
+                    }
+                    goto APTI;
+                  }
+                }
+            }
+        }
+      }
+    }
+}
+    
+    
     strcpy(startBatch.newBatch.batch_name,batch_name);
- /*  */ 
-    fprintf(fp, "%s,%d,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d\n", 
+ /*  
+    fprintf(fp, "%s,%d,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%s,%s,%s,%s,%s,%s,%s\n", 
     startBatch.newBatch.batch_name,startBatch.newBatch.admission,
     startBatch.venue.lec_hall_name,startBatch.venue.lec_hall_capacity,
     startBatch.startDate.dd,startBatch.startDate.mm,startBatch.startDate.yy,
     startBatch.endDate.dd,startBatch.endDate.mm,startBatch.endDate.yy,
-    startBatch.batchTime.batch_Start_Time,startBatch.batchTime.batch_End_Time);
-	
+    startBatch.batchTime.batch_Start_Time,startBatch.batchTime.batch_End_Time,
+    startBatch.faculaty[0].faculaty_name,startBatch.module[0].module_name,
+    startBatch.faculaty[1].faculaty_name,startBatch.module[1].module_name,
+    startBatch.faculaty[2].faculaty_name,startBatch.module[2].module_name,
+    startBatch.faculaty[3].faculaty_name,startBatch.module[3].module_name);
+	*/ 
 
     printf("\nNew Batch Schedule added to record\n");
     fclose(fp);
     count++;
 }
+
 
 void read_Batch_Schedule() {
     FILE* fp = fopen("scheduleBatch.csv", "r");
@@ -425,10 +582,12 @@ void read_Batch_Schedule() {
             printf("%d",prev_startBatch[i].batchTime.batch_End_Time);
             p = strtok(NULL,",");
             printf("\n");
+            // count++;
             }
         }
 	fclose(fp);
     print_Batch_Schedule(); 
+    // printf("count : %d",count);
  }
 
 void print_Batch_Schedule() {

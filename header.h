@@ -37,7 +37,7 @@ typedef struct Venue{
 } Venue;
 
 typedef struct Faculaty{
-    char facility_name[10];
+    char faculaty_name[10];
     int C_prog;
     int CPP;
     int Apti;
@@ -48,8 +48,8 @@ typedef struct Faculaty{
 typedef struct StartBatch{
     Batch newBatch;
     Venue venue;
-    Faculaty faculaty[3];
-    Module module[3];
+    Faculaty faculaty[4];
+    Module module[4];
     Date startDate;
     Date endDate;
     Time batchTime;
@@ -78,13 +78,11 @@ int datecmp(Date d1,Date d2);
 bool isLeapYear(int year);
 bool isValidDate(Date d);
 
-
-void checkDate();
-void checkTime();
-
 void read_Batch_Schedule();
 void print_Batch_Schedule(); 
 extern Venue v1[5];
-
+extern Module m[5]; 
+extern Faculaty f1[7];
+int get_id();
 
 #endif

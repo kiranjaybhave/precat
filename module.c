@@ -111,7 +111,7 @@ void read_faculty_Data()
         if (fgets(buffer, sizeof(buffer), fp) != NULL) {
             // Using strtok to tokenize the buffer
             char *p = strtok(buffer, ",");
-            strcpy(f1[i].facility_name, p);
+            strcpy(f1[i].faculaty_name, p);
             
             // Initializing flags to 0
             f1[i].C_prog = 0;
@@ -138,13 +138,13 @@ void read_faculty_Data()
         }
     }
     fclose(fp);
-    print_faculty();
+    // print_faculty();
 }
 
  void print_faculty(void) {
     printf("Name\t\tC-prog\tDS\tCPP\tOS\tApti\n");
     for (int i = 0; i < 7; i++) {
-        printf("%s\t%d\t%d\t%d\t%d\t%d\n", f1[i].facility_name, f1[i].C_prog, f1[i].Ds, f1[i].CPP, f1[i].Os, f1[i].Apti);
+        printf("%s\t%d\t%d\t%d\t%d\t%d\n", f1[i].faculaty_name, f1[i].C_prog, f1[i].Ds, f1[i].CPP, f1[i].Os, f1[i].Apti);
     }
 }
 
