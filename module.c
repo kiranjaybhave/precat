@@ -5,6 +5,24 @@ Venue v1[5];
 Module m[5]; 
 Faculaty f1[7];
 
+int line_count = 0;
+void read_line_count()
+{
+    FILE* fp = fopen("scheduleBatch.csv", "r");
+    if (!fp) {
+		// Error in file opening
+		printf("Can't open file\n");
+		exit(0);
+	}
+    char buffer[100];
+    while (fgets(buffer,100,fp)!=NULL)
+    {
+        line_count++;
+    }   
+	fclose(fp);
+
+}
+
 void read_moduleData()
 {
 	FILE* fp = fopen("module.csv", "r");

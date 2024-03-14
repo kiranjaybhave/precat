@@ -13,6 +13,8 @@ int menu() {
 }
 int main() {
 
+    read_line_count();
+    printf("count : %d \n",line_count);
     // read_moduleData();
     // printf("\n");
     // printf("==================================\n");
@@ -52,7 +54,7 @@ int main() {
                 break;
             case 4:
                 // printf("\ninside case 4\n");
-                finalSchedule();
+                //finalSchedule();
                 break;
             case 5:
                 count = get_id();

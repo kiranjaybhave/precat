@@ -83,6 +83,10 @@ void print_Batch_Schedule();
 extern Venue v1[5];
 extern Module m[5]; 
 extern Faculaty f1[7];
+extern int line_count;
 int get_id();
+
+//---------------------------------------
+void read_line_count();
 
 #endif
